@@ -2,101 +2,153 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>daishuge 网站入口｜跳转器</title>
-  <meta name="description" content="daishuge 网站入口与跳转器：输入网址即可前往。默认直达 m.daishuge.win:5255。" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#ffffff" />
+  <title>daishuge 入口｜Jump Portal</title>
+  <meta name="description" content="极简跳转器：默认使用 http://，支持中文 / English，适配超小屏设备。" />
   <meta name="robots" content="index,follow" />
-  <!-- 如有百度/必应站点验证，把下面注释去掉并填值 -->
-  <!-- <meta name="baidu-site-verification" content="xxxxxxxx" /> -->
-  <!-- <meta name="msvalidate.01" content="xxxxxxxx" /> -->
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="daishuge 网站入口｜跳转器">
-  <meta property="og:description" content="输入网址即可跳转；提供到 m.daishuge.win:5255 的直达入口。">
-  <meta property="og:url" content="YOUR_PAGE_URL">
-
-  <!-- Canonical -->
-  <link rel="canonical" href="YOUR_PAGE_URL" />
-
-  <!-- 结构化数据：提高可理解性 -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "daishuge 网站入口",
-    "url": "YOUR_PAGE_URL",
-    "inLanguage": "zh-CN",
-    "description": "daishuge 站点的公开入口与跳转器。"
-  }
-  </script>
-
   <style>
-    /* 无动画，超轻量，手表友好 */
     :root { color-scheme: light dark; }
+    html, body { height: 100%; }
     body {
+      margin: 0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      margin: 0; min-height: 100vh; display: grid; place-items: center;
+      display: grid;
+      place-items: center;
+      background: #fff;
+      padding: max(6px, env(safe-area-inset-top)) max(6px, env(safe-area-inset-right))
+               max(6px, env(safe-area-inset-bottom)) max(6px, env(safe-area-inset-left));
     }
-    main { width: min(680px, 92vw); padding: 24px; text-align: center; }
-    h1 { font-size: 22px; margin: 0 0 12px; }
-    p  { margin: 6px 0; line-height: 1.6; }
-    form { margin-top: 14px; display: flex; gap: 8px; justify-content: center; }
+    .card {
+      width: min(520px, 94vw);
+      max-height: 96vh;
+      border: 1px solid rgba(0,0,0,.2);
+      border-radius: 14px;
+      padding: 14px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    h1 {
+      font-size: clamp(16px, 4.5vw, 20px);
+      margin: 0 0 8px 0;
+      line-height: 1.2;
+    }
+    .desc { font-size: clamp(12px, 3.5vw, 14px); opacity: .8; margin: 0 0 10px; }
+
+    .lang {
+      display: inline-flex; gap: 6px; margin: 6px 0 10px;
+      justify-content: center; align-items: center;
+    }
+    .lang button {
+      font-size: clamp(12px, 3.6vw, 14px);
+      padding: 8px 10px; border-radius: 10px; border: 1px solid #888; background: #fff;
+      min-width: 44px; min-height: 36px; /* 小屏易点 */
+    }
+
+    form { display: flex; gap: 6px; justify-content: center; align-items: center; }
     input[type="text"] {
-      width: min(420px, 70vw); height: 40px; padding: 0 12px; font-size: 16px;
-      border: 1px solid #999; border-radius: 10px; outline: none;
+      width: min(360px, 72vw);
+      height: 42px;
+      padding: 0 10px;
+      font-size: clamp(14px, 4vw, 16px);
+      border: 1px solid #999; border-radius: 12px; outline: none;
     }
-    button {
-      height: 40px; padding: 0 14px; font-size: 16px; border: 1px solid #666;
-      background: transparent; border-radius: 10px; cursor: pointer;
+    button.submit {
+      height: 42px; padding: 0 14px; font-size: clamp(14px, 4vw, 16px);
+      border: 1px solid #666; background: #fff; border-radius: 12px;
+      min-width: 64px;
     }
-    .direct { display:inline-block; margin-top: 14px; padding:10px 14px;
-      border:1px solid #888; border-radius:12px; text-decoration:none; }
-    .hint { font-size: 13px; opacity: .8; }
+    .direct {
+      display: inline-block; margin-top: 10px; padding: 10px 12px;
+      border: 1px solid #888; border-radius: 12px; text-decoration: none;
+      font-size: clamp(13px, 3.8vw, 15px);
+    }
+    .hint { font-size: clamp(11px, 3.4vw, 13px); opacity: .75; margin-top: 8px; }
+
+    /* 适配超小圆屏：内容尽量居中、紧凑 */
+    @media (max-width: 520px) {
+      .card { border-radius: 12px; padding: 12px; }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <h1>daishuge 网站入口 · 跳转器</h1>
-    <p>这是一个极简跳转页：输入任何网址按回车或点击「前往」，即可打开目标网页。</p>
-    <p class="hint">建议关键词：<strong>daishuge 入口</strong>（便于搜索定位本页）。</p>
+  <main class="card" role="main">
+    <h1 id="title" data-i18n-zh="daishuge 网站入口 · 跳转器" data-i18n-en="daishuge Entry · Jump Portal">daishuge 网站入口 · 跳转器</h1>
+    <p class="desc" id="desc" data-i18n-zh="输入网址后按回车或点击按钮即可跳转（默认使用 http://）。"
+       data-i18n-en="Type a URL and press Enter or click to go (defaults to http://).">
+      输入网址后按回车或点击按钮即可跳转（默认使用 http://）。
+    </p>
+
+    <div class="lang" aria-label="Language">
+      <button type="button" id="btn-zh" aria-pressed="true">中文</button>
+      <button type="button" id="btn-en" aria-pressed="false">English</button>
+    </div>
 
     <form id="goForm" autocomplete="on">
-      <input id="url" type="text" placeholder="输入网址，例如 m.daishuge.win:5255" aria-label="输入要前往的网址" />
-      <button type="submit">前往</button>
+      <input id="url" type="text" inputmode="url"
+             placeholder="例如 m.daishuge.win:5255 或 1.2.3.4:8080"
+             aria-label="输入要前往的网址" />
+      <button class="submit" type="submit" id="goBtn" data-i18n-zh="前往" data-i18n-en="Go">前往</button>
     </form>
 
-    <!-- 直达链接：既做兜底，也让搜索引擎能清楚页面主题 -->
-    <p><a class="direct" href="http://m.daishuge.win:5255">直接进入：m.daishuge.win:5255</a></p>
+    <a class="direct" id="directLink" href="http://m.daishuge.win:5255"
+       data-i18n-zh="直接进入：m.daishuge.win:5255" data-i18n-en="Direct: m.daishuge.win:5255">
+      直接进入：m.daishuge.win:5255
+    </a>
 
-    <p class="hint">若目标不支持 https，请确保前缀为 <code>http://</code>。</p>
+    <p class="hint" id="hint" data-i18n-zh="未填写协议时将自动补全为 http://。若目标仅支持 http，请确认浏览器允许。"
+       data-i18n-en="If protocol is missing, http:// will be added. Ensure your browser allows plain HTTP if required.">
+      未填写协议时将自动补全为 http://。若目标仅支持 http，请确认浏览器允许。
+    </p>
   </main>
 
   <script>
-    // 轻量规范化：补协议；允许域名:端口/IP；拒空
+    // —— 语言切换 ——
+    function setLang(lang) {
+      localStorage.setItem('lang', lang);
+      const isZH = lang === 'zh';
+      document.getElementById('btn-zh').setAttribute('aria-pressed', isZH);
+      document.getElementById('btn-en').setAttribute('aria-pressed', !isZH);
+      // 应用 data-i18n-* 文案
+      const nodes = document.querySelectorAll('[data-i18n-zh]');
+      nodes.forEach(n => { n.textContent = n.getAttribute(isZH ? 'data-i18n-zh' : 'data-i18n-en'); });
+      // 占位符也做切换
+      const url = document.getElementById('url');
+      url.placeholder = isZH ? '例如 m.daishuge.win:5255 或 1.2.3.4:8080' : 'e.g. m.daishuge.win:5255 or 1.2.3.4:8080';
+      document.documentElement.lang = isZH ? 'zh-CN' : 'en';
+      document.title = isZH ? 'daishuge 入口｜Jump Portal' : 'daishuge Entry｜Jump Portal';
+    }
+    document.getElementById('btn-zh').addEventListener('click', () => setLang('zh'));
+    document.getElementById('btn-en').addEventListener('click', () => setLang('en'));
+
+    // 初始语言：优先本地存储 → 根据浏览器语言
+    (function initLang(){
+      const saved = localStorage.getItem('lang');
+      if (saved) return setLang(saved);
+      const lang = (navigator.language || 'zh').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+      setLang(lang);
+    })();
+
+    // —— 默认使用 http:// ——
     function normalize(u) {
-      u = (u || "").trim();
+      u = (u || '').trim();
       if (!u) return null;
-      if (!/^https?:\/\//i.test(u)) u = "http://" + u;
+      // 如果没有协议，强制补 http://
+      if (!/^https?:\/\//i.test(u)) u = 'http://' + u;
       return u;
     }
-    function handleSubmit(e) {
+
+    function handleSubmit(e){
       e.preventDefault();
-      const v = document.getElementById("url").value;
+      const v = document.getElementById('url').value;
       const dest = normalize(v);
       if (dest) location.assign(dest);
     }
-    document.getElementById("goForm").addEventListener("submit", handleSubmit);
+    document.getElementById('goForm').addEventListener('submit', handleSubmit);
 
-    // 如需入口口令（前端弱保护），取消注释：
-    /*
-    (function () {
-      var pass = prompt("请输入访问口令");
-      if (pass !== "000393") {
-        document.body.innerHTML = "<main><h1>Access Denied</h1><p>口令错误</p></main>";
-      }
-    })();
-    */
+    // 小屏键盘优化：输入框聚焦即选中，方便重输
+    const input = document.getElementById('url');
+    input.addEventListener('focus', function(){ this.select(); });
   </script>
 </body>
 </html>
