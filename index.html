@@ -1,28 +1,102 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>欢迎页面</title>
-    <style>
-        .welcome-section {
-            height: 25vh; /* 高度占屏幕的25% */
-            background-color: #2aa4f0; /* 水蓝色背景 */
-            display: flex;
-            justify-content: center; /* 水平居中 */
-            align-items: center; /* 垂直居中 */
-            font-size: 270%; /* 字体大小 */
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>daishuge 网站入口｜跳转器</title>
+  <meta name="description" content="daishuge 网站入口与跳转器：输入网址即可前往。默认直达 m.daishuge.win:5255。" />
+  <meta name="robots" content="index,follow" />
+  <!-- 如有百度/必应站点验证，把下面注释去掉并填值 -->
+  <!-- <meta name="baidu-site-verification" content="xxxxxxxx" /> -->
+  <!-- <meta name="msvalidate.01" content="xxxxxxxx" /> -->
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="daishuge 网站入口｜跳转器">
+  <meta property="og:description" content="输入网址即可跳转；提供到 m.daishuge.win:5255 的直达入口。">
+  <meta property="og:url" content="YOUR_PAGE_URL">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="YOUR_PAGE_URL" />
+
+  <!-- 结构化数据：提高可理解性 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "daishuge 网站入口",
+    "url": "YOUR_PAGE_URL",
+    "inLanguage": "zh-CN",
+    "description": "daishuge 站点的公开入口与跳转器。"
+  }
+  </script>
+
+  <style>
+    /* 无动画，超轻量，手表友好 */
+    :root { color-scheme: light dark; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      margin: 0; min-height: 100vh; display: grid; place-items: center;
+    }
+    main { width: min(680px, 92vw); padding: 24px; text-align: center; }
+    h1 { font-size: 22px; margin: 0 0 12px; }
+    p  { margin: 6px 0; line-height: 1.6; }
+    form { margin-top: 14px; display: flex; gap: 8px; justify-content: center; }
+    input[type="text"] {
+      width: min(420px, 70vw); height: 40px; padding: 0 12px; font-size: 16px;
+      border: 1px solid #999; border-radius: 10px; outline: none;
+    }
+    button {
+      height: 40px; padding: 0 14px; font-size: 16px; border: 1px solid #666;
+      background: transparent; border-radius: 10px; cursor: pointer;
+    }
+    .direct { display:inline-block; margin-top: 14px; padding:10px 14px;
+      border:1px solid #888; border-radius:12px; text-decoration:none; }
+    .hint { font-size: 13px; opacity: .8; }
+  </style>
 </head>
-<body { margin: 20px; }>
-    <div class="welcome-section">
-        欢迎来到 daishuge.me!
-    </div>
-    <br><br>
-    <h2>这是是袋鼠哥！</h2>
-    <br><br>
-    <h3 style="font-size: 200%">网站推荐</h3>
-    <p style="font-size: 100%"><a href="https://topman8848.com">黑魔法！</a></p>
-    <p style="font-size: 100%"><a href="https://chat.openai.com">黑科技！</a></p>
+<body>
+  <main>
+    <h1>daishuge 网站入口 · 跳转器</h1>
+    <p>这是一个极简跳转页：输入任何网址按回车或点击「前往」，即可打开目标网页。</p>
+    <p class="hint">建议关键词：<strong>daishuge 入口</strong>（便于搜索定位本页）。</p>
+
+    <form id="goForm" autocomplete="on">
+      <input id="url" type="text" placeholder="输入网址，例如 m.daishuge.win:5255" aria-label="输入要前往的网址" />
+      <button type="submit">前往</button>
+    </form>
+
+    <!-- 直达链接：既做兜底，也让搜索引擎能清楚页面主题 -->
+    <p><a class="direct" href="http://m.daishuge.win:5255">直接进入：m.daishuge.win:5255</a></p>
+
+    <p class="hint">若目标不支持 https，请确保前缀为 <code>http://</code>。</p>
+  </main>
+
+  <script>
+    // 轻量规范化：补协议；允许域名:端口/IP；拒空
+    function normalize(u) {
+      u = (u || "").trim();
+      if (!u) return null;
+      if (!/^https?:\/\//i.test(u)) u = "http://" + u;
+      return u;
+    }
+    function handleSubmit(e) {
+      e.preventDefault();
+      const v = document.getElementById("url").value;
+      const dest = normalize(v);
+      if (dest) location.assign(dest);
+    }
+    document.getElementById("goForm").addEventListener("submit", handleSubmit);
+
+    // 如需入口口令（前端弱保护），取消注释：
+    /*
+    (function () {
+      var pass = prompt("请输入访问口令");
+      if (pass !== "000393") {
+        document.body.innerHTML = "<main><h1>Access Denied</h1><p>口令错误</p></main>";
+      }
+    })();
+    */
+  </script>
 </body>
 </html>
